@@ -1,3 +1,5 @@
 dist
 node_modules
 /main/frontend/dist
+filetransfer.exe
+main/uploads/*
