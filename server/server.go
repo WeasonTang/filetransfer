@@ -20,6 +20,7 @@ import (
 //go:embed frontend/dist/*
 var FS embed.FS
 
+//启动 gin 服务
 func Run(port string) {
 	gin.SetMode(gin.DebugMode)
 	router := gin.Default()
