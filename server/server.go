@@ -8,6 +8,7 @@ import (
 	"strings"
 
 	c "github.com/WeasonTang/filetransfer/server/controller"
+	"github.com/WeasonTang/filetransfer/server/ws"
 	"github.com/gin-gonic/gin"
 )
 
@@ -19,6 +20,12 @@ func Run(port string) {
 	gin.SetMode(gin.DebugMode)
 	router := gin.Default()
 	staticFiles, _ := fs.Sub(FS, "frontend/dist")
+
+	hub := ws.NewHub()
+	go hub.Run()
+	router.GET("/ws", func(c *gin.Context) {
+		ws.HttpController(c, hub)
+	})
 	router.POST("api/v1/files", c.FilesController)
 	router.GET("/api/v1/qrcodes", c.QrcodesController)
 	router.GET("/uploads/:path", c.UploadsController)
